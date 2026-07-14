@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Final Letter for Grego</title>
+    <style>
+        :root {
+            --bg-color: #fcf8f7;
+            --primary-color: #d15677;
+            --secondary-color: #e58a75;
+            --text-color: #2c2523;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Cover Screen / Envelope */
+        #cover-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #e07a5f 0%, #3d348b 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: var(--white);
+            text-align: center;
+            transition: transform 1s ease-in-out;
+            padding: 20px;
+        }
+
+        #cover-screen h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        #cover-screen p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .open-btn {
+            background-color: var(--white);
+            color: #3d348b;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .badge {
+            background-color: #f7d6c8;
+            color: #b5462a;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--text-color);
+            font-weight: 400;
+        }
+
+        /* Media Gallery Grid */
+        .gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .gallery-item {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            object-fit: cover;
+            background-color: #eee;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        /* Letter Box */
+        .letter-content {
+            background-color: var(--white);
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            text-align: justify;
+            white-space: pre-line; /* Keeps paragraphs spaced nicely */
+            margin-bottom: 30px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Links & Interactive Area */
+        .interactive-box {
+            background-color: #fdf2ee;
+            border: 1px dashed var(--secondary-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .interactive-box h3 {
+            margin-bottom: 15px;
+            color: #b5462a;
+            font-size: 1.2rem;
+        }
+
+        .btn-link {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .btn-link:hover {
+            background-color: #b33e5c;
+        }
+
+        .credentials {
+            background: #2c2523;
+            color: #f7d6c8;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* YouTube Audio Player Hidden */
+        #audio-container {
+            position: fixed;
+            width: 0;
+            height: 0;
+            border: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            .letter-content {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cover-screen">
+        <span style="font-size: 3rem; margin-bottom: 20px;">✉️</span>
+        <h1>Special Letter for Grego</h1>
+        <p>Dari Indy. Sebuah pesan terakhir penutup cerita.</p>
+        <button class="open-btn" onclick="openLetter()">Buka Surat</button>
+    </div>
+
+    <div id="audio-container">
+        <div id="player"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <span class="badge">A Final Chapter</span>
+            <h2>Keeping the Memories, Letting Go the Story</h2>
+        </header>
+
+        <div class="gallery">
+            <img src="IMG_2674.jpg" alt="Memories Book Cover" class="gallery-item full-width">
+            <img src="IMG_5056.jpg" alt="Buku Diary 4 Desember" class="gallery-item">
+            <img src="IMG_3375.jpg" alt="Back to Disappear Title" class="gallery-item">
+        </div>
+
+        <div class="letter-content">
+Hai gre, sorry klo gw selalu ngechat lu melulu disaat gue udah punya cowo dan disaat lu jg udh punya cewe tapi maksud gue bukan buat ngerusak hubungan lu ko, tapi ini demi kedamaian hati gue sendiri. Kita kenal udah kurang lebih 3 tahun lamanya semenjak kita match di applikasi kuning itu🐝 HAHA. Awalnya gue bingung knp Tuhan mempertemukan kita pada saat itu, disaat hati gue kosong, dan lu datang ke hidup gue sebagai penghibur, pelengkap serta penemani kesepian gue saat itu, dan yaaa saat itu juga gue jatuh cinta ke lu. Iyaa.. jatuh cinta. Tapi tenang aja, perasaan gw udah berubahh ko ga kaya dulu. 
+
+Sorry gue terpaksa blak blak an kaya gini, karna menurut gue emng udh waktunya aja gue buat ngomong gini ke lu, karna sekitar beberapa bulan yg lalu gw ajak lu ketemu, lu ga bisa dan emng gaenak sama cewe lu, butt its oke gue ngertii ko posisi lu jadi sepertinya sebelum semuanya terlambat lebih jauh (udah telat sii) tapi gapapa dr pd gak sama sekali, gue mau bilang ke lu klo rasa cinta dan sayang gw udah berubah jadi rasa iklass, sama seperti kalimat yg gw selalu bilang ke lu "gw akan selalu bahagia klo ngeliat lu bahagia" itu bener bgt, gw ngeliat story lu bahagia sama cewe pilihan lu skrg gw coba buat iklas dan ikut senengg ngeliatnya karna org yg gw sayang udh bahagia sama org pilihan dia walaupun kebahagiaan nya bukan dr gue sendiri. 
+
+Ohh iyaa gre, tujuan gw ngomong gini, gw mau ngasih lu sesuatu.. tadinya tujuan kita ketemu gw mau ngasih ini ke lu yaitu buku.. iyaa buku diary gue yang gw tulis ketika gw udh mulai jatuh cinta ke lu, buku yg isinyaa curahan hati gue, foto2 kitaa, bahkan chat2kita yg gw anggep itu jadi kenangan manis bgttt jadi gw print dan gw tempel2lin kaya ibarat itu "memories book about gregorius" WKWKWKWK tapi benerr kok, temen2 gue saksi nya bahkan temen2 gue sampe skrg nyuruh gw buat bakar aja tu bukuu, tapi gw memilih buat simpen buku itu dipaling bawahh rak buku gue. Karna menurut gw ga semua kenangan itu berakhir di bakar, tapi cukup di simpen tanpa perlu di buka2 kembali juga udah cukup.
+
+Nahh, trus gue juga mau kasih cerita yang gue buat judul nya "back to disappear" yaa seperti judul nya artinya kembali untuk menghilang, sama kaya lu dlu yang selalu dateng, hilang, dateng, hilangg. isi ceritanyaa yaa cerita kita dr awal kita kenal sampaii kita berdua sama2 udah bahagia masing2 tapi ada beberapa cerita yang emng gue gantii ceritanya ga sama kaya cerita real nya , maybe 90% real 10% fiktif wkwkwkw.
+        </div>
+
+        <div class="gallery">
+            <img src="IMG_3879.jpg" alt="Indy Portrait" class="gallery-item">
+            <img src="IMG_4309.jpg" alt="Moment Bersama" class="gallery-item">
+            <img src="IMG_4804.jpg" alt="Face Mask Moment" class="gallery-item">
+            <img src="IMG_4808.jpg" alt="Mirror Selfie" class="gallery-item">
+            <img src="IMG_4393.jpg" alt="Grego Playing Billiard" class="gallery-item full-width">
+            <img src="IMG_4694.jpg" alt="Together with friends" class="gallery-item full-width">
+        </div>
+
+        <div class="letter-content">
+Lu bisa baca ceritanya langsung lewat link Wattpad di bawah, atau kalau lu males baca di wattpad bisa lewat dokumen PDF yang udah gue siapin ya gre. Karya atau novel pertama gue yang jujur 80% gue ketik sambil ngeluarin air mata haha.
+
+Ohh iya, ini kan gw udahh kasih semua yaa tinggal buku aja yg emng kayaknya gabisa karna kita juga ga ada kesempatan buat ketemu lagi, lu harus menghargai cewe lu skrg, begitupun gue juga. Klo lu tanya "lu kan dah ada cowo ko kesan nya masih belum bisa move on dan masih blm selesai sama gue si?" Iyaaa, cowo gue tau ko gw blm selesai sama masa lalu gue, gw udh billing gw gabisa memulai hubungan sedangkan gue blm selesai. gw sampai skrg lg berusaha untuk menerima sikapp baik buruknya cowo gw sekarangg doain aja yaa gue bisa jalanin terus sampe ke jenjang pernikahann. Pokoknya nama lu selalu gw sebut ko gre dalam doa gue, tapii skrg doa nya semoga lu sama cewe lu skrgg juga bisa langgeng dan lu bisa segera lamarr dia yahhh cihuyyy✨✨
+
+Dahh yaa gre, gw udh ungkapin semua perasaan gue sebelum semuanya terlambatt, walaupun udh telat sii tapi gapapa udahh dr pd ga sama sekali kann demi kesehatan mental gue. 
+
+Setelah ini gue izin yaa buat block semuaa sosmed, tiktok, instagram, wa karna ini satu satunya cara supaya gue bisa tenang buat ngelupain lu 100% , progress nya si skrg udh 70% kooo masih ada 30% lagi yang perlu gue hapusss memori nya dr otak gue soalnyaa terkadang gue bisa tiba2 kepikiran lu dan nangis tengah malem. gokil yaaa sampe setiap gw denger lagu afgan judul "ku dengan nya kau dengan dia" selalu nangis gue sialannn karna bagi gue itu gw dan lu bangett sii😭😂😂 pokoknya lagu2 afgan klo gw denger selalu yg muncul tu nama lu muluuu, ehh lagu juicy luicy yang judul nya "tampar" skrg relate bgt sama gue tauu dengerin dahh wkwkwkw 😂
+
+Dahh yaa gre, maaf yaa klo gw lancangg bgt chat begini, gw harap lu disanaa bahagia selaluuu yaa, lu bagaikan lagu nya john mayer gue pernah coverin lagu nya dan gw post di story first itu buat lu sebenarnyaa tapi gatau ya lu dener atau engga hahaha yg judulnyaa "you're gonna live forever in me" artinya lu akan selalu hidup selamanya di hati gue. Plis jangan katain gue alayy tapi emng gue alay bgt klo udh jatuh cinta sama orggg😭😭🙏
+
+dahh segituu ajaa untuk bapak gregorius yomar satrio kadarisman, makasihh yaa udh pernah hadir dalam hidup gue, makasih udah jadi seseorang yang ngajarin gue apa itu arti cinta gak harus memiliki. Semogaa lu sehat2 terus disana ya, salam yaa buat keluarga lu 4G familyy, Bokap dan nyokap lu, ohhiyaa semoga juga bokap lu sehatt2 yaaa gre. GOD BLESS UU ALWAYSS BAPAK GREGOOOO✨✨❤️‍🩹❤️‍🩹❤️‍🩹
+        </div>
+
+        <div class="interactive-box">
+            <h3>📖 Karya Cerita: Back to Disappear</h3>
+            <p>Baca 90% kisah nyata perjalanan kita di Wattpad pada tautan berikut:</p>
+            <a href="https://www.wattpad.com/story/396802051?utm_source=ios&utm_medium=link&utm_content=story_info&wp_page=story_details&wp_uname=chindyoktaviaa15" target="_blank" class="btn-link">Buka di Wattpad</a>
+            
+            <p style="margin-top: 15px;">Atau buka file PDF surat manual di sini:</p>
+            <a href="IMG_4528.jpg" target="_blank" class="btn-link" style="background-color: #e58a75;">Lihat Foto Surat Fisik</a>
+        </div>
+
+        <div class="interactive-box" style="border-color: #2c2523;">
+            <h3>📸 Memory Fake Account (Instagram)</h3>
+            <p>Akses tempat penyimpanan ungkapan hati dan kenangan lawas. Akun ini sepenuhnya milik lu setelah ini:</p>
+            <div class="credentials">
+                <strong>Username:</strong> zahraamwrl<br>
+                <strong>Password:</strong> allaboutgrego
+            </div>
+            <p style="font-size: 0.85rem; margin-top: 10px; color: #666;">*Terserah mau di-delete account, di-logout, atau sekadar dilihat.</p>
+        </div>
+
+        <footer>
+            <p>God Bless You Always, Grego.</p>
+            <p style="font-size: 0.8rem; margin-top: 5px;">~ From Indy, with peace and letting go.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Load YouTube Iframe API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: '08Ndzf5-HxI', // ID lagu dygta - kesepian
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': '08Ndzf5-HxI'
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready, action triggered when clicked open
+        }
+
+        function openLetter() {
+            // Hide the cover overlay screen
+            document.getElementById('cover-screen').style.transform = 'translateY(-100vh)';
+            
+            // Auto play music when user interacts/clicks open
+            if (player && player.playVideo) {
+                player.playVideo();
+            }
+        }
+    </script>
+</body>
+</html>
